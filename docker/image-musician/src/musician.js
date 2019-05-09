@@ -41,4 +41,4 @@ map.set("violin", "gzi-gzi");
 map.set("drum", "boum-boum");
 
 var instrument = process.argv[2];
-var t1 = new Musician(map.get(instrument));
+new Musician(map.get(instrument));

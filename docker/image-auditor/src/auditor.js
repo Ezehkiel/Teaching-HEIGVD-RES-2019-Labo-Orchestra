@@ -2,6 +2,7 @@
 const dgram = require('dgram');
 const HashMap = require('hashmap');
 const Timestamp = require("timestamp-nano");
+const moment = require("moment");
 const net = require('net');
 var map = new HashMap();
 var instrument = new HashMap();
@@ -25,37 +26,35 @@ function Musician(uuid, inst, active) {
 }
 
 var server = net.createServer(function(socket) {
-    socket.write(function(data){
-        map.forEach(function(value, key) {
-            console.log(key + " : " + value);
-        });
+    map.forEach(function(value, key) {
+        var active = moment.utc(moment(value.activeSince).diff(moment(Timestamp.fromDate(new Date()).toJSON()))).format("ss");
+
+        if(active < 54 && active > 0){
+            console.log("Suppression de " + key);
+            map.delete(key);
+        }
+
     });
+    var allMusicians = [];
+    map.forEach(function(value, key) {
+        allMusicians.push(value);
+    });
+
+    socket.write(JSON.stringify(allMusicians));
     socket.pipe(socket);
+    socket.end();
 });
 
-server.listen(2205, '127.0.0.1');
+server.listen(2205, '0.0.0.0');
 
 s.on('message', function (msg, source) {
 
     obj = JSON.parse(msg);
 
     var musician = new Musician(obj.uuid, instrument.get(obj.instrument), Timestamp.fromDate(new Date()).toJSON());
-    if(! map.has(obj.uuid)){
-        map.set(obj.uuid, musician);
-    }
+    map.set(obj.uuid, musician);
 
-
-    map.forEach(function(value, key) {
-        console.log(value.uuid + "\n" + value.instrument + "\n" + value.activeSince);
-    });
 
 
 
 });
-
-
-
-
-
-
-
