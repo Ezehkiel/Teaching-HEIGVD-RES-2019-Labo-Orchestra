@@ -1,0 +1,12 @@
+[
+  {
+    "uuid": "9c1b9ccd-07d4-4374-b3d6-22c72cdd7d85",
+    "instrument": "piano",
+    "activeSince": "2019-05-09T08:10:46.804Z"
+  },
+  {
+    "uuid": "1ffe2b6e-979d-475a-9106-c894d92c9bd2",
+    "instrument": "flute",
+    "activeSince": "2019-05-09T08:10:46.571Z"
+  }
+]

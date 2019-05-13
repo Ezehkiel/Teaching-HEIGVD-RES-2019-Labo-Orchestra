@@ -26,6 +26,7 @@ function Musician(uuid, inst, active) {
 }
 
 var server = net.createServer(function(socket) {
+
     map.forEach(function(value, key) {
         var active = moment.utc(moment(value.activeSince).diff(moment(Timestamp.fromDate(new Date()).toJSON()))).format("ss");
 

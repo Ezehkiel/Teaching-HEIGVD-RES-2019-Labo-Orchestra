@@ -113,7 +113,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | What **payload** should we put in the UDP datagrams? |
 | | The UUID of the application and the instrument |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
-| | *Enter your response here...* |
+| | We have map on both of the app and we have an array in the auditor. We have a map to stock the registered musician in the auditor. We also have a map to bind the instrument and the sound of the instrument. We update the map of musician on every datagram received, if the musician is already in the map we update the time either we add the musician in the map, with his UUID as a key. We upadte the map on every TCP connection too. |
 
 
 ## Task 2: implement a "musician" Node.js application
@@ -123,11 +123,11 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**? |
 | | We can use JSON.stringify(data)                              |
 |Question | What is **npm**?  |
-|  | It's a packet manager for javascript. It's like maeven       |
+|  | It's a packet manager for javascript. It's like maven       |
 |Question | What is the `npm install` command and what is the purpose of the `--save` flag?  |
 | | npm install mean that we install the package on our machine. --save is used to save the dependance in a file named package.json in the project |
 |Question | How can we use the `https://www.npmjs.com/` web site?  |
-| | We can search a package and install it |
+| | We can search a package. |
 |Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122? |
 | | We can install a package that generate it for us (for exemple uuid) |
 |Question | In Node.js, how can we execute a function on a **periodic** basis? |
@@ -153,7 +153,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | How do we **stop/kill** one running container?  |
 | | We have to get his id and then _docker stop/kill id_ |
 |Question | How can we check that our running containers are effectively sending UDP datagrams?  |
-| | We can log on it and we should see the console message |
+| | We can log on it and we should see the console message, or we can use tcpdump to see. |
 
 
 ## Task 4: implement an "auditor" Node.js application
@@ -161,15 +161,15 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | ---  |
 |Question | With Node.js, how can we listen for UDP datagrams in a multicast group? |
-| | *Enter your response here...*  |
+| | We first need to install dgram with npm install dgram and then we can use it like that ```const s = dgram.createSocket('udp4'); s.bind("9907", function() {     console.log("Joining multicast group");     s.addMembership("239.255.22.5"); });``` |
 |Question | How can we use the `Map` built-in object introduced in ECMAScript 6 to implement a **dictionary**?  |
-| | *Enter your response here...* |
+| | Like that ```var instruments = new Map(); instruments.set("piano", "ti-ta-ti"); instruments.set("trumpet", "pouet");``` |
 |Question | How can we use the `Moment.js` npm module to help us with **date manipulations** and formatting?  |
-| | *Enter your response here...* |
+| | ```moment(value.activeSince).``` for exemple. With moment we can use the method diff |
 |Question | When and how do we **get rid of inactive players**?  |
-| | *Enter your response here...* |
+| | *When we receive a TCP connection we look if we have inactive musician* |
 |Question | How do I implement a **simple TCP server** in Node.js?  |
-| | *Enter your response here...* |
+| | ```var server = net.createServer()``` and then we can make some stuff like that ```server.on("connect") |
 
 
 ## Task 5: package the "auditor" app in a Docker image
@@ -177,7 +177,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | --- |
 |Question | How do we validate that the whole system works, once we have built our Docker image? |
-| | *Enter your response here...* |
+| | With the script validate.sh. We can also test to launch our docker container and then open a TCP connection to the auditor and then stop on musician container and reopen a TCP connection and we should see that a musician lest the array |
 
 
 ## Constraints
